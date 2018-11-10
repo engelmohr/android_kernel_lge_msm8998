@@ -304,8 +304,9 @@ int lge_ddic_feature_init(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 
 int lge_mdss_dsi_panel_init(struct device_node *node, struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 {
+#ifdef CONFIG_MACH_MSM8998_PHOENIX
 	lge_ddic_ops_init(ctrl_pdata);
-
+#endif
 	lge_mdss_panel_parse_dt(node, ctrl_pdata);
 
 	lge_ddic_feature_init(ctrl_pdata);
