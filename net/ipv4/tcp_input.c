@@ -3658,7 +3658,9 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
 	if (before(ack, prior_snd_una)) {
 		/* RFC 5961 5.2 [Blind Data Injection Attack].[Mitigation] */
 		if (before(ack, prior_snd_una - tp->max_window)) {
+#ifndef CONFIG_LGP_DATA_TCPIP_MPTCP
 			if (!(flag & FLAG_NO_CHALLENGE_ACK))
+#endif
 				tcp_send_challenge_ack(sk, skb);
 			return -1;
 		}
@@ -6253,8 +6255,12 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 
 	/* step 5: check the ACK field */
 	acceptable = tcp_ack(sk, skb, FLAG_SLOWPATH |
+#ifndef CONFIG_LGP_DATA_TCPIP_MPTCP
 				      FLAG_UPDATE_TS_RECENT |
 				      FLAG_NO_CHALLENGE_ACK) > 0;
+#else 
+				      FLAG_UPDATE_TS_RECENT) > 0;
+#endif
 
 	if (!acceptable) {
 		if (sk->sk_state == TCP_SYN_RECV)
