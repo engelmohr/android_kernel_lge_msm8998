@@ -287,14 +287,29 @@
 			compatible = "android,firmware";
 			fstab {
 				compatible = "android,fstab";
+#ifdef CONFIG_MACH_MSM8998_JOAN
+                                system {
+                                        compatible = "android,system";
+                                        dev = "/dev/block/platform/soc/1da4000.ufshc/by-name/system";
+                                        type = "ext4";
+                                        mnt_flags = "ro,barrier=1,discard";
+                                        fsmgr_flags = "wait,verify";
+                                        status = "ok";
+                                };
+#endif
 				vendor {
 					compatible = "android,vendor";
 					dev = "/dev/block/platform/soc/1da4000.ufshc/by-name/vendor";
 					type = "ext4";
 					mnt_flags = "ro,barrier=1,discard";
 					fsmgr_flags = "wait,slotselect,verify";
+#if defined(CONFIG_MACH_MSM8998_PHOENIX) || defined(CONFIG_LGE_MSM8998_ENABLE_VENDOR)
 					status = "ok";
+#else 
+					status = "disabled";
+#endif
 				};
+#ifdef CONFIG_MACH_MSM8998_PHOENIX
 				product {
 					compatible = "android,product";
 					dev = "/dev/block/platform/soc/1da4000.ufshc/by-name/product";
@@ -303,6 +318,7 @@
 					fsmgr_flags = "wait,slotselect,verify";
 					status = "ok";
 				};
+#endif
 			};
 		};
 	};
