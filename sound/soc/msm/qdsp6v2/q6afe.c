@@ -2394,11 +2394,11 @@ static int afe_tfa_dsp_read_msg_via_mmap(int dev /* not used */, int buf_size, c
 	tfa_dsp_read_msg.get_param.port_id = tfa_port_id;
 	tfa_dsp_read_msg.get_param.payload_size = buf_size;
 
-	tfa_dsp_read_msg.get_param.payload_address_lsw =
+	tfa_dsp_read_msg.get_param.mem_hdr.data_payload_addr_lsw =
 		lower_32_bits(this_afe.tfa_cal.cal_data.paddr);
-	tfa_dsp_read_msg.get_param.payload_address_msw =
+	tfa_dsp_read_msg.get_param.mem_hdr.data_payload_addr_msw =
 		msm_audio_populate_upper_32_bits(this_afe.tfa_cal.cal_data.paddr);
-	tfa_dsp_read_msg.get_param.mem_map_handle = this_afe.tfa_cal.map_data.map_handle;
+	tfa_dsp_read_msg.get_param.mem_hdr.mem_map_handle = this_afe.tfa_cal.map_data.map_handle;
 
 	atomic_set(&this_afe.tfa_state, 1);
 	atomic_set(&this_afe.status, 0);

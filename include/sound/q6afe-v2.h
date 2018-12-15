@@ -386,7 +386,7 @@ struct aanc_data {
 /*afe tfa dsp read message*/
 struct afe_tfa_dsp_read_msg_t {
 	struct apr_hdr hdr;
-	struct afe_rtac_get_param_v2 get_param;
+	struct afe_port_cmd_get_param_v2 get_param;
 } __packed;
 
 typedef int (*tfa_event_handler_t)(int devidx, int tfadsp_event);
