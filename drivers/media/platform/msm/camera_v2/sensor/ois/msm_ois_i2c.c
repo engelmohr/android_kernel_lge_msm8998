@@ -148,7 +148,13 @@ int32_t load_bin(uint8_t *ois_bin, uint32_t filesize, char *filename)
 	set_fs(KERNEL_DS);
 
 	//sprintf(fs_name_buf1, "/system/media/%s", filename);
-  sprintf(fs_name_buf1, "/vendor/etc/camera/%s", filename);
+#ifdef CONFIG_MACH_MSM8998_JOAN
+	sprintf(fs_name_buf1, "/vendor/firmware/%s", filename);
+#else
+#ifdef CONFIG_MACH_MSM8998_PHOENIX
+        sprintf(fs_name_buf1, "/vendor/etc/camera/%s", filename);
+#endif
+#endif
 	fd1 = sys_open(fs_name_buf1, O_RDONLY, 0);
 	if (fd1 < 0) {
 		printk("%s: File not exist (filename: %s)\n",__func__, fs_name_buf1);
