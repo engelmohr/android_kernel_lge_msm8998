@@ -116,6 +116,12 @@ struct lge_mdss_dsi_ctrl_pdata {
 
 	/* ddic ops */
 	struct lge_ddic_ops *ddic_ops;
+
+	void (*parse_dt_blmaps)(struct device_node *np,
+					struct mdss_dsi_ctrl_pdata *ctrl_pdata);
+	void (*parse_dt_panel_ctrl)(struct device_node *np,
+					struct mdss_dsi_ctrl_pdata *ctrl_pdata);
+	int (*create_panel_sysfs)(struct class *panel);
 };
 
 #define LGE_DDIC_OP_CHECK(c, op) (c && c->lge_extra.ddic_ops && c->lge_extra.ddic_ops->op_##op)
